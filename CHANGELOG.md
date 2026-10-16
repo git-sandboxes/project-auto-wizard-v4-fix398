@@ -1,7 +1,19 @@
 # Changelog
 
-**Current version:** 0.1.2  
-**Last updated:** 2026-10-16T07:36:20Z  
+**Current version:** 0.2.0  
+**Last updated:** 2026-10-16T07:37:00Z  
+
+---
+
+## [0.2.0] - 2026-10-16
+
+**PR:** #2  
+
+**✨ Features**
+- squash 확인
+
+**🔧 Changes**
+- main 병합 (squash 이후 정리)
 
 ---
 
