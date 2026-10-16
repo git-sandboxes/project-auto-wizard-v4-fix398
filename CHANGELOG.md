@@ -1,7 +1,14 @@
 # Changelog
 
-**Current version:** 0.1.1  
-**Last updated:** 2026-10-16T07:30:31Z  
+**Current version:** 0.1.2  
+**Last updated:** 2026-10-16T07:36:20Z  
+
+---
+
+## [0.1.2] - 2026-10-16
+
+**🐛 Fixes**
+- main 직접 수정 (safety-net 재현)
 
 ---
 
