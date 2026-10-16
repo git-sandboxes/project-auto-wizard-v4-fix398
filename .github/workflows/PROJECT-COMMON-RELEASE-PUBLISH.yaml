@@ -129,18 +129,6 @@ jobs:
             # pr-flow: only release-confirm merges publish a release
             # (pattern shared with AUTO-CHANGELOG-CONTROL / VERSION-CONTROL)
             PROCEED=true
-          else
-            # pr-flow, rebase or squash merge of a release PR: the version-confirm commit is in the
-            # pushed range (rebase: replayed, often as the head; squash: listed in the body) (#398)
-            BEFORE="${{ github.event.before }}"
-            if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then
-              RANGE="HEAD^..HEAD"
-            else
-              RANGE="$BEFORE..HEAD"
-            fi
-            if git log --format=%B "$RANGE" 2>/dev/null | grep -qE "^(\* )?chore\(version\): confirm v[0-9]"; then
-              PROCEED=true
-            fi
           fi
 
           echo "proceed=$PROCEED" >> $GITHUB_OUTPUT

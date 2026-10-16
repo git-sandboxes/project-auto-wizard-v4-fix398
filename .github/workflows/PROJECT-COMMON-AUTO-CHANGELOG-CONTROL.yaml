@@ -31,9 +31,9 @@
 #
 # With version.yml release_automerge: false, step 5 and the wait job are
 # skipped: the PR is renamed to the release-confirm subject and one guidance
-# comment asks the maintainer to merge it. Every merge method publishes the release: the
-# confirm commit carries no [skip ci], and RELEASE-PUBLISH finds it in the pushed range after
-# a squash or rebase merge (#398). A merge commit stays recommended for the next release notes.
+# comment asks the maintainer to merge it (a merge commit is recommended). Squash and rebase
+# merges put the [skip ci] of the confirm commit into the merge result, so GitHub skips the
+# push workflows; PROJECT-RELEASE-PR-MERGED then dispatches PROJECT-RELEASE-PUBLISH (#398).
 #
 # When step 5 is rejected by branch protection (required review or checks), the run
 # fails with the cause and the options, and the PR gets the same rename and a guidance
@@ -291,7 +291,7 @@ jobs:
               NEW_VERSION="$HEAD_VERSION"
               echo "$(m wf_changelog.version_reuse_unreleased new_version="$NEW_VERSION" main_branch="main" main_version="$MAIN_VERSION")"
             fi
-          elif [ -z "$MAIN_VERSION" ] && printf '%s\n' "$HEAD_MSG" | grep -q "^chore(version): confirm v"; then
+          elif [ -z "$MAIN_VERSION" ] && printf '%s\n' "$HEAD_MSG" | grep -q "^chore(version): confirm v.* \[skip ci\]"; then
             # Re-run of a first release where main has no version.yml yet
             NEW_VERSION="$HEAD_VERSION"
             echo "$(m wf_changelog.version_reuse_previous new_version="$NEW_VERSION")"
@@ -426,9 +426,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "$(m wf_common.no_changes)"
           else
-            # No [skip ci]: the GITHUB_TOKEN push wakes no workflow anyway, and as the PR head (rebase merge, squash
-            # body) [skip ci] would make GitHub skip the release push (#398)
-            git commit -m "chore(version): confirm v${VERSION} and update release docs"
+            git commit -m "chore(version): confirm v${VERSION} and update release docs [skip ci]"
 
             # Race-condition guard: pull-rebase then push (up to 3 retries)
             PUSH_ERR="${RUNNER_TEMP:-/tmp}/push_err.txt"
