@@ -1,7 +1,14 @@
 # Changelog
 
-**Current version:** 0.1.0  
-**Last updated:** 2026-10-16T06:45:05Z  
+**Current version:** 0.1.1  
+**Last updated:** 2026-10-16T07:30:31Z  
+
+---
+
+## [0.1.1] - 2026-10-16
+
+**🔧 Changes**
+- #398 수정본 재설치
 
 ---
 
